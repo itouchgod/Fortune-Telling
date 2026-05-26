@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CurrentBaziClock from "@/components/home/CurrentBaziClock";
 import PageContainer from "@/components/layout/PageContainer";
 
 const features = [
@@ -24,15 +25,11 @@ export default function HomePage() {
           </div>
         </div>
         <div className="panel p-4">
-          <div className="grid grid-cols-4 gap-2 text-center">
-            {["年柱", "月柱", "日柱", "时柱"].map((label, index) => (
-              <div key={label} className="rounded-md bg-slate-50 p-3">
-                <div className="text-xs text-slate-500">{label}</div>
-                <div className="mt-2 text-2xl font-semibold text-cinnabar">{["壬", "戊", "戊", "丁"][index]}</div>
-                <div className="mt-1 text-2xl font-semibold text-jade">{["申", "申", "午", "巳"][index]}</div>
-              </div>
-            ))}
+          <div className="mb-4 flex items-center justify-between border-b border-line pb-3">
+            <h2 className="text-sm font-medium text-ink">及时盘</h2>
+            <span className="text-xs text-slate-500">按当前时间实时推算四柱</span>
           </div>
+          <CurrentBaziClock />
           <div className="mt-4 grid gap-2">
             {features.map((item) => (
               <div key={item} className="rounded-md border border-line bg-white px-3 py-2 text-sm text-slate-700">{item}</div>
