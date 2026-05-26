@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "generatedAt": "2026-05-26",
+    "engineVersion": "0.2.0",
+    "purpose": "阶段 A 回归期望四柱（基于当前引擎 baseline，接入 DST/均时差后 TC19/TC20/DST* 可能需重算）"
+  },
+  "regression": [
+    { "id": "TC01", "birthDate": "1990-05-20", "birthTime": "08:00", "expected": ["庚午", "辛巳", "乙酉", "庚辰"] },
+    { "id": "TC02", "birthDate": "1988-12-01", "birthTime": "14:30", "gender": "female", "expected": ["戊辰", "癸亥", "庚寅", "癸未"] },
+    { "id": "TC05", "birthDate": "2024-02-04", "birthTime": "16:27", "tags": ["solar-term"], "expected": ["癸卯", "乙丑", "戊戌", "庚申"] },
+    { "id": "TC06", "birthDate": "2024-02-04", "birthTime": "16:28", "tags": ["solar-term"], "expected": ["甲辰", "丙寅", "戊戌", "庚申"] },
+    { "id": "TC07", "birthDate": "2024-03-05", "birthTime": "10:22", "tags": ["solar-term"], "expected": ["甲辰", "丙寅", "戊辰", "丁巳"] },
+    { "id": "TC08", "birthDate": "2024-03-05", "birthTime": "10:23", "tags": ["solar-term"], "expected": ["甲辰", "丁卯", "戊辰", "丁巳"] },
+    { "id": "TC09", "birthDate": "2024-05-10", "birthTime": "23:30", "ziHourRule": "earlyZi", "tags": ["zi-hour"], "expected": ["甲辰", "己巳", "乙亥", "戊子"] },
+    { "id": "TC11", "birthDate": "2024-05-10", "birthTime": "23:30", "ziHourRule": "lateZi", "tags": ["zi-hour"], "expected": ["甲辰", "己巳", "甲戌", "丙子"] },
+    { "id": "TC13", "calendarType": "lunar", "birthDate": "2023-02-15", "isLeapMonth": false, "tags": ["lunar"], "expected": ["癸卯", "乙卯", "癸亥", "戊午"] },
+    { "id": "TC14", "calendarType": "lunar", "birthDate": "2023-02-15", "isLeapMonth": true, "tags": ["lunar"], "expected": ["癸卯", "丙辰", "癸巳", "戊午"] }
+  ],
+  "dst": [
+    {
+      "id": "DST01",
+      "birthDate": "1990-07-15",
+      "birthTime": "11:50",
+      "birthPlace": "洛杉矶",
+      "timezone": "America/Los_Angeles",
+      "useTrueSolarTime": true,
+      "resolvedOffset": -7,
+      "expected": ["庚午", "癸未", "辛巳", "癸巳"]
+    },
+    {
+      "id": "DST02",
+      "birthDate": "1990-07-15",
+      "birthTime": "11:50",
+      "timezone": "America/Los_Angeles",
+      "timezoneOffset": -8,
+      "useTrueSolarTime": true,
+      "note": "错误固定 offset，接入 DST 后应与 DST01 时柱不同",
+      "expected": ["庚午", "癸未", "辛巳", "甲午"]
+    }
+  ],
+  "errors": [
+    { "id": "ERR01", "calendarType": "lunar", "birthDate": "2023-03-15", "isLeapMonth": true, "errorIncludes": "闰月" },
+    { "id": "ERR02", "birthDate": "1899-01-01", "errorIncludes": "1900" },
+    { "id": "ERR03", "birthDate": "2024-02-30", "errorIncludes": "无效" }
+  ],
+  "solarTermBoundaries": {
+    "note": "北京时间北京经度，lunar-typescript 引擎实测",
+    "lichun2024": { "before": "16:27 年柱癸卯", "after": "16:28 年柱甲辰" },
+    "jingzhe2024": { "before": "10:22 月柱丙寅", "after": "10:23 月柱丁卯" }
+  }
+}

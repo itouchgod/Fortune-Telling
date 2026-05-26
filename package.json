@@ -1,0 +1,31 @@
+{
+  "name": "fortune-telling-bazi",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "next lint",
+    "test:bazi": "node --experimental-strip-types --loader ./scripts/ts-loader.mjs scripts/test-bazi.mts && node --experimental-strip-types --loader ./scripts/ts-loader.mjs scripts/test-chart-migration.mts"
+  },
+  "dependencies": {
+    "@js-temporal/polyfill": "^0.5.1",
+    "lunar-typescript": "^1.8.6",
+    "next": "^16.2.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.2",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.5.15",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.7.2"
+  },
+  "overrides": {
+    "postcss": "8.5.15"
+  }
+}
