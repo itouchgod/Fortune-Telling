@@ -1,16 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import PageContainer from "@/components/layout/PageContainer";
 import TermSearch from "@/components/dictionary/TermSearch";
 import TermList from "@/components/dictionary/TermList";
 import TermDetailModal from "@/components/dictionary/TermDetailModal";
+import LoadingState from "@/components/common/LoadingState";
 import { getTerms } from "@/services/dictionaryApi";
 import type { DictionaryTerm } from "@/types/bazi";
 
 const categories = ["全部", "十神", "五行", "神煞", "合冲刑害", "十二长生", "纳音"];
 
-export default function DictionaryPage() {
+function DictionaryPageContent() {
+  const searchParams = useSearchParams();
   const [terms, setTerms] = useState<DictionaryTerm[]>([]);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("全部");
@@ -19,6 +22,11 @@ export default function DictionaryPage() {
   useEffect(() => {
     getTerms().then(setTerms);
   }, []);
+
+  useEffect(() => {
+    const initialQuery = searchParams.get("q");
+    if (initialQuery) setQuery(initialQuery);
+  }, [searchParams]);
 
   const filteredTerms = useMemo(() => {
     return terms.filter((term) => {
@@ -53,5 +61,13 @@ export default function DictionaryPage() {
       </div>
       <TermDetailModal term={activeTerm} onClose={() => setActiveTerm(null)} />
     </PageContainer>
+  );
+}
+
+export default function DictionaryPage() {
+  return (
+    <Suspense fallback={<LoadingState message="加载术语词典..." />}>
+      <DictionaryPageContent />
+    </Suspense>
   );
 }

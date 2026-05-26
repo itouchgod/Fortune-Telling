@@ -48,6 +48,7 @@
 - 基础术语库：`data/dictionaryTerms.ts`
 - 排盘校验案例与 `npm run test:bazi`
 - README.md 与 AGENT.md 更新
+- 首页正式化：引擎版本展示、排盘规则摘要、功能分区、最近命盘、以此时间排盘跳转
 
 验证结果：
 
@@ -408,3 +409,44 @@
 - 为 DST 回退路径增加更多异常 timezone 测试
 - 将测试 runner 的 TypeScript 执行方式迁移到稳定 loader 或编译后运行
 - 建立与第三方权威万年历的人工验收表
+
+## 2026-05-26 阶段 B 更新：首页正式化
+
+本次新增功能：
+
+- 首页文案与项目阶段同步，强调引擎 v0.3.0 与排盘依据透明
+- 新增 `HomeFeatureSections`：已开放 / 即将开放功能分区
+- 新增 `RecentChartsPanel`：展示最近 2 个本地保存命盘
+- 及时盘增加「以此时间排盘」，直接调用 `createChart()` 生成命盘（默认性别男，使用所选时间与浏览器时区）
+- 及时盘增加预览说明，明确与正式排盘规则差异
+- 排盘表单支持 URL 参数预填出生日期与时间
+- Footer 文案更新，展示引擎版本与流派差异说明
+
+本次修改文件：
+
+- `app/page.tsx`
+- `app/paipan/page.tsx`
+- `components/home/CurrentBaziClock.tsx`
+- `components/home/HomeFeatureSections.tsx`
+- `components/home/RecentChartsPanel.tsx`
+- `components/paipan/BirthForm.tsx`
+- `components/layout/Footer.tsx`
+- `README.md`
+- `AGENT.md`
+
+页面变化：
+
+- 首页主 CTA 改为「开始排盘」，新增「术语词典」入口
+- 左栏增加排盘规则摘要与回归测试说明
+- 右栏增加术语词典 / 排盘设置快捷入口
+- 移动端及时盘优先展示（`order-1`）
+
+已知问题：
+
+- 及时盘仍使用 `lunar-typescript` 预览路径，尚未完全对齐 `buildBaziChart()` 的设置项
+- 最近命盘仅读取 `bazi.savedCharts`，不含未保存的缓存命盘
+
+下一步计划：
+
+- 及时盘可选对齐用户设置中的真太阳时、子时换日规则
+- 首页增加最近一次排盘（含未保存缓存）快捷入口

@@ -12,7 +12,9 @@ const defaultSettings: PaipanSettings = {
   defaultCalendar: "solar",
   qiYunRule: "lunar-typescript-default",
   aiPreference: "balanced",
-  paipanRule: "standard"
+  paipanRule: "standard",
+  pillarLayout: "vertical",
+  plateDisplayMode: "standard"
 };
 
 export default function SettingsPage() {

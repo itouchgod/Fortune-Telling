@@ -47,3 +47,8 @@ textarea {
 .panel-body {
   @apply p-4;
 }
+
+.home-paipan-preview {
+  @apply overflow-hidden rounded-md border border-amber-200/80 bg-[#fffce8] shadow-sm;
+  background-image: radial-gradient(circle at 95% 15%, rgba(185, 129, 36, 0.07), transparent 42%);
+}

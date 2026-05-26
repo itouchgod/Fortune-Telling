@@ -175,6 +175,9 @@ export interface MingShuReport {
   createdAt: string;
 }
 
+export type PillarLayout = "vertical" | "horizontal";
+export type PlateDisplayMode = "simple" | "standard";
+
 export interface PaipanSettings {
   useTrueSolarTime: boolean;
   useEquationOfTime: boolean;
@@ -183,6 +186,8 @@ export interface PaipanSettings {
   qiYunRule: "lunar-typescript-default";
   aiPreference: string;
   paipanRule: string;
+  pillarLayout?: PillarLayout;
+  plateDisplayMode?: PlateDisplayMode;
 }
 
 export interface BaziBuildResult {

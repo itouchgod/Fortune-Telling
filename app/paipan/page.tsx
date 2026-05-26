@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import PageContainer from "@/components/layout/PageContainer";
 import BirthForm from "@/components/paipan/BirthForm";
+import LoadingState from "@/components/common/LoadingState";
 
 export default function PaipanPage() {
   return (
@@ -8,7 +10,9 @@ export default function PaipanPage() {
       description="填写出生信息后生成命盘。系统会按时区、真太阳时、子时换日和节气规则计算四柱。"
     >
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-        <BirthForm />
+        <Suspense fallback={<LoadingState message="加载排盘表单..." />}>
+          <BirthForm />
+        </Suspense>
         <aside className="panel h-fit">
           <div className="panel-header">
             <h2 className="font-semibold text-ink">排盘说明</h2>

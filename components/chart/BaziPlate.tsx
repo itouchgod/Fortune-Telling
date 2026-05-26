@@ -1,4 +1,5 @@
 import type { BaziChart } from "@/types/bazi";
+import GanZhiText from "@/components/chart/GanZhiText";
 import PillarColumn from "@/components/chart/PillarColumn";
 import TenGodRow from "@/components/chart/TenGodRow";
 import HiddenStemRow from "@/components/chart/HiddenStemRow";
@@ -34,11 +35,19 @@ export default function BaziPlate({ chart, onTermClick }: { chart: BaziChart; on
               <TenGodRow pillars={chart.pillars} onTermClick={onTermClick} />
               <tr>
                 <th className="sticky left-0 bg-slate-50 px-3 py-3 text-left text-sm font-medium text-slate-600">天干</th>
-                {chart.pillars.map((pillar) => <td key={pillar.type} className="px-3 py-3 text-center text-lg font-semibold text-cinnabar">{pillar.heavenlyStem}</td>)}
+                {chart.pillars.map((pillar) => (
+                  <td key={pillar.type} className="px-3 py-3 text-center text-lg font-semibold">
+                    <GanZhiText char={pillar.heavenlyStem} kind="stem" />
+                  </td>
+                ))}
               </tr>
               <tr>
                 <th className="sticky left-0 bg-slate-50 px-3 py-3 text-left text-sm font-medium text-slate-600">地支</th>
-                {chart.pillars.map((pillar) => <td key={pillar.type} className="px-3 py-3 text-center text-lg font-semibold text-jade">{pillar.earthlyBranch}</td>)}
+                {chart.pillars.map((pillar) => (
+                  <td key={pillar.type} className="px-3 py-3 text-center text-lg font-semibold">
+                    <GanZhiText char={pillar.earthlyBranch} kind="branch" />
+                  </td>
+                ))}
               </tr>
               <HiddenStemRow pillars={chart.pillars} onTermClick={onTermClick} />
               <NayinRow pillars={chart.pillars} onTermClick={onTermClick} />

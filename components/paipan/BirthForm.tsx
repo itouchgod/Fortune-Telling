@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import CalendarTypeSwitch from "@/components/paipan/CalendarTypeSwitch";
 import GenderSelect from "@/components/paipan/GenderSelect";
 import BirthTimeSelect from "@/components/paipan/BirthTimeSelect";
@@ -30,23 +30,36 @@ const defaultBirthInfo: BirthInfo = {
   isLeapMonth: false
 };
 
+function isValidDate(value: string | null) {
+  return Boolean(value && /^\d{4}-\d{2}-\d{2}$/.test(value));
+}
+
+function isValidTime(value: string | null) {
+  return Boolean(value && /^\d{2}:\d{2}$/.test(value));
+}
+
 export default function BirthForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [form, setForm] = useState<BirthInfo>(defaultBirthInfo);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const settings = readPaipanSettings();
-    if (!settings) return;
+    const prefilledDate = searchParams.get("date");
+    const prefilledTime = searchParams.get("time");
+
     setForm((current) => ({
       ...current,
-      calendarType: settings.defaultCalendar ?? current.calendarType,
-      useTrueSolarTime: settings.useTrueSolarTime ?? current.useTrueSolarTime,
-      useEquationOfTime: settings.useEquationOfTime ?? current.useEquationOfTime,
-      ziHourRule: settings.ziHourRule ?? current.ziHourRule
+      calendarType: settings?.defaultCalendar ?? current.calendarType,
+      useTrueSolarTime: settings?.useTrueSolarTime ?? current.useTrueSolarTime,
+      useEquationOfTime: settings?.useEquationOfTime ?? current.useEquationOfTime,
+      ziHourRule: settings?.ziHourRule ?? current.ziHourRule,
+      birthDate: isValidDate(prefilledDate) ? prefilledDate! : current.birthDate,
+      birthTime: isValidTime(prefilledTime) ? prefilledTime! : current.birthTime
     }));
-  }, []);
+  }, [searchParams]);
 
   function patchForm(value: Partial<BirthInfo>) {
     setForm((current) => ({ ...current, ...value }));
@@ -69,7 +82,7 @@ export default function BirthForm() {
     <form onSubmit={handleSubmit} className="panel">
       <div className="panel-header">
         <h2 className="font-semibold text-ink">出生信息</h2>
-        <p className="mt-1 text-sm text-slate-600">当前已接入基础四柱排盘，后续可继续替换和增强命理算法。</p>
+        <p className="mt-1 text-sm text-slate-600">填写出生信息后，系统会按时区、真太阳时、子时换日和节气规则计算四柱。</p>
       </div>
       <div className="panel-body grid gap-5">
         <label className="grid gap-2">
